@@ -1,6 +1,6 @@
-import courses from './courses';
+import courses from './BsitCourses.js';
 
-function createCourseNodes() {
+function createCourseNodes(courses) {
     const positions = {};
 
     return courses.map((course) => {
@@ -19,7 +19,7 @@ function createCourseNodes() {
         return {
             id: course.id.toString(), // id should be a string
             data: { 
-                code: course.code,
+                label: course.code,
                 description: course.description
             },
             position: { 
@@ -30,6 +30,6 @@ function createCourseNodes() {
     });
 }
 
-const courseNodes = createCourseNodes();
+const courseNodes = createCourseNodes(courses);
 
 export default courseNodes;

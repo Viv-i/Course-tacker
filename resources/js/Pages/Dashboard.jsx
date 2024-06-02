@@ -1,14 +1,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import courses from '../Utilities/BsitCourses';
 import React, { useCallback } from 'react';
 import ReactFlow, {
     Controls,
     Background
 } from 'reactflow';
-
 import 'reactflow/dist/style.css';
 
+import initialNodes from '../Utilities/courseFlowNodes.js';
+console.log(initialNodes);
 
 export default function Dashboard({ auth }) {
     return (
@@ -17,7 +17,9 @@ export default function Dashboard({ auth }) {
             <Head title="Dashboard" />
 
             <div style={{ width: '100vw', height: '80vh' }}>
-                <ReactFlow>
+                <ReactFlow
+                    nodes={initialNodes}
+                >
 
                     <Controls />
                     <Background variant='dots' gap={22} size={2} color='rgba(255,255,255,0.5)' />                
