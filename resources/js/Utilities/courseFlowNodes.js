@@ -18,8 +18,9 @@ function createCourseNodes(courses) {
 
         return {
             id: course.id.toString(), // id should be a string
+            type: 'customNode',
             data: { 
-                label: course.code,
+                code: course.code,
                 description: course.description
             },
             position: { 
