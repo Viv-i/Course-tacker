@@ -1,5 +1,6 @@
-// src/Utilities/NodeCreator.js
-export function createCourseNodes(courses) {
+import courses from './courses';
+
+function createCourseNodes() {
     const positions = {};
 
     return courses.map((course) => {
@@ -16,10 +17,10 @@ export function createCourseNodes(courses) {
         }
 
         return {
-            id: course.id,
+            id: course.id.toString(), // id should be a string
             data: { 
-                code: `${course.code}`,
-                description: `${course.description}`
+                code: course.code,
+                description: course.description
             },
             position: { 
                 x: positions[yearTermKey].x,
@@ -28,3 +29,7 @@ export function createCourseNodes(courses) {
         };
     });
 }
+
+const courseNodes = createCourseNodes();
+
+export default courseNodes;
