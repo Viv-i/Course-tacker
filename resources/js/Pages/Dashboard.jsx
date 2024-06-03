@@ -9,9 +9,7 @@ import 'reactflow/dist/style.css';
 import CustomNode from '../Components/CustomNode';
 import initialNodes from '../Utilities/courseFlowNodes.js';
 
-console.log(initialNodes);
 const nodeTypes = { customNode : CustomNode }; 
-
 
 export default function Dashboard({ auth }) {
     return (
