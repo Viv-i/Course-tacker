@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enrollments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('program_id')->constrained();
-            $table->dateTime('start_date');
-            $table->timestamps();
+        Schema::table('courses', function (Blueprint $table) {
+            $table->integer('prerequisite_id')->nullable()->change();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enrollments');
+        Schema::table('courses', function (Blueprint $table) {
+            $table->integer('prerequisite_id')->nullable(false)->change();
+        });
     }
 };
