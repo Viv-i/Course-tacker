@@ -6,7 +6,7 @@ export default function createCourseNodes(courses, dependencies) {
 
         if (!positions[yearTermKey]) {
             positions[yearTermKey] = {
-                x: (course.year - 1) * 1640 + (course.term_id - 1) * 410,        
+                x: (course.year - 1) * 1230 + (course.term_id - 1) * 410,        
                 y: 0
             };
         } else {
