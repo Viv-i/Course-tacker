@@ -7,13 +7,19 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import CustomNode from '../Components/CustomNode';
-import initialNodes from '../Utilities/courseFlowNodes.js';
-import edges from '../Utilities/courseFlowEdges.js';
+import nodeCreator from '../Utilities/NodeCreator.js';
+import dependents from '../Utilities/Dependents.js';
+import edges from '../Utilities/EdgeCreator.js';
 
 
 const nodeTypes = { customNode : CustomNode }; 
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, courses}) {
+    const dependencies = dependents(courses);
+    const initialNodes = nodeCreator(courses, dependencies);
+    const initialEdges = edges(dependencies);
+
+
     return (
         <AuthenticatedLayout user={auth.user} header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}>
 
@@ -22,7 +28,7 @@ export default function Dashboard({ auth }) {
             <div style={{ width: '100vw', height: '80vh' }}>
                 <ReactFlow
                     nodes={initialNodes}
-                    edges={edges}
+                    edges={initialEdges}
                     nodeTypes={nodeTypes}
                 >
 

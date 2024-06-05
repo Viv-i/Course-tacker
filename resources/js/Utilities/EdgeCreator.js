@@ -1,6 +1,4 @@
-import { dependencies } from "./courseFlowNodes";
-
-export function createCourseEdges(dependencies) {
+export default function createCourseEdges(dependencies) {
     const courseEdges = [];
 
     for (let i = 0; i < dependencies.length; i++) {
@@ -26,5 +24,3 @@ export function createCourseEdges(dependencies) {
     return courseEdges;
 }
 
-const courseEdges = createCourseEdges(dependencies);
-export default courseEdges;
