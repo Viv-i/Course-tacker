@@ -32,7 +32,10 @@ export default function createCourseNodes(courses, dependencies) {
             position: {
                 x: positions[yearTermKey].x,
                 y: positions[yearTermKey].y
-            }
+            },
+            draggable: true,
+            selectable: true
+        
         };
     });
 }
