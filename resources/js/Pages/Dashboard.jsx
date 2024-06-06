@@ -41,6 +41,7 @@ function SaveRestore({ auth, courses, flowKey = 'dashboard-flow'}) {
         if (rfInstance) {
           const flow = rfInstance.toObject();
           localStorage.setItem(flowKey, JSON.stringify(flow));
+          window.alert('Changes have been saved successfully');
         }
     }, [rfInstance]);
 
@@ -71,13 +72,15 @@ function SaveRestore({ auth, courses, flowKey = 'dashboard-flow'}) {
                     onEdgesChange={onEdgesChange}
                     onInit={setRfInstance}
                     nodeTypes={nodeTypes}
+                    snapToGrid={true}
+                    snapGrid={[10, 10]}
                 >
                 <Panel position="top-right">
                     <div className='flex gap-2'>
                         <button className="flex gap-2 items-center px-2 py-2 text-white bg-blue-500 hover:bg-blue-400 rounded"  onClick={onSave}>
                             <p>Save</p>
-                            <svg fill="#0F0F0F" height="24px" width="24px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                                viewBox="0 0 512 512" xml:space="preserve">
+                            <svg fill="#0F0F0F" height="24px" width="24px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" 
+                                viewBox="0 0 512 512" xmlSpace="preserve">
                                     <g>
                                         <g>
                                             <path d="M440.125,0H0v512h512V71.875L440.125,0z M281.6,31.347h31.347v94.041H281.6V31.347z M136.359,31.347h113.894v125.388
@@ -97,7 +100,7 @@ function SaveRestore({ auth, courses, flowKey = 'dashboard-flow'}) {
                     </div>
                 </Panel>
                 <Controls />
-                <Background variant='dots' gap={22} size={2} color='rgba(255,255,255,0.5)' />                
+                <Background variant='dots' gap={20} size={2} color='rgba(255,255,255,0.5)' />                
                 </ReactFlow>
             </div>
         </AuthenticatedLayout>
