@@ -17,6 +17,8 @@ export default function createCourseNodes(courses, dependencies) {
             id: course.id.toString(),
             code: course.course_code,
             description: course.course_description,
+            grade: course.grade,
+            term: course.term_id,
             prerequisite_id: course.prerequisite_id
         };
 
