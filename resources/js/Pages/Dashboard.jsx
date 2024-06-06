@@ -1,11 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ReactFlow, {
     Controls,
     Background,
-    applyEdgeChanges,
-    applyNodeChanges,
+    MiniMap,
     useNodesState,      // for save and restore nodes
     useEdgesState,      //
     useReactFlow,       //
@@ -14,11 +13,17 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import CustomNode from '../Components/CustomNode';
+import AnnotationNode from '../Components/AnnotationNode';
 import nodeCreator from '../Utilities/NodeCreator.js';
 import dependents from '../Utilities/Dependents.js';
 import edgeCreator from '../Utilities/EdgeCreator.js';
 
-const nodeTypes = { customNode: CustomNode }; 
+const nodeTypes = { 
+    customNode: CustomNode,
+    annotation: AnnotationNode,
+}; 
+
+const nodeClassName = (node) => node.type;
 
 const flowkey = 'dashboard-flow';
 const getNodeId = () => `randomnode_${+new Date()}`;
@@ -26,8 +31,23 @@ const getNodeId = () => `randomnode_${+new Date()}`;
 function SaveRestore({ auth, courses, flowKey = 'dashboard-flow'}) {
 
     const dependencies = dependents(courses);
-    const initialNodes = nodeCreator(courses, dependencies);
-    const initialEdges = edgeCreator(dependencies);
+    const initialNodes = [
+        ...nodeCreator(courses, dependencies),
+        {
+            id: 'annotation-1',
+            type: 'annotation',
+            draggable: false,
+            selectable: false,
+            data: {
+              arrowStyle: {
+                right: 0,
+                bottom: 0,
+                transform: 'translate(-30px,10px) rotate(-80deg)',
+              },
+            },
+            position: { x: -500, y: 0 },
+          },
+    ];    const initialEdges = edgeCreator(dependencies);
 
     const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -55,8 +75,11 @@ function SaveRestore({ auth, courses, flowKey = 'dashboard-flow'}) {
             }
         };
         restoreFlow();
-        window.alert('Displayed Course Flow successfully');
     }, [setNodes, setViewport]);
+
+    useEffect(() => {
+        onRestore(); // Call onRestore when component mounts
+      }, []); // Empty dependency array ensures it runs only once on moun
 
     return (
         <AuthenticatedLayout user={auth.user} header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}>
@@ -74,7 +97,7 @@ function SaveRestore({ auth, courses, flowKey = 'dashboard-flow'}) {
                     snapToGrid={true}
                     snapGrid={[10, 10]}
                 >
-                <Panel position="top-right">
+                {/* <Panel position="top-right">
                     <div className='flex gap-2'>
                         <button className="flex gap-2 items-center px-2 py-2 text-white bg-custom-blue hover:bg-blue-400 rounded"  onClick={onSave}>
                             <p>Save</p>
@@ -97,7 +120,7 @@ function SaveRestore({ auth, courses, flowKey = 'dashboard-flow'}) {
                             </svg>
                         </button>
                     </div>
-                </Panel>
+                </Panel> */}
                 <Controls />
                 <Background variant='dots' gap={20} size={2} color='rgba(255,255,255,0.5)' />                
                 </ReactFlow>
